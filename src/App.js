@@ -1,4 +1,4 @@
-import PetitionRequest from "./components/content/PetitionRequest";
+import PetitionRequest from "./components/content/PetitionRequest/PetitionRequest";
 
 
 function App() {
