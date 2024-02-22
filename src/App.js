@@ -1,12 +1,10 @@
-import Content from "./components/content/Content";
-import Header from "./components/header/Header";
+import PetitionRequest from "./components/content/PetitionRequest";
 
 
 function App() {
   return (
     <>
-      <Header/>
-      <Content/>
+      <PetitionRequest/>
     </>
   );
 }
