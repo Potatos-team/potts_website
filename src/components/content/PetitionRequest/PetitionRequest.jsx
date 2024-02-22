@@ -12,10 +12,6 @@ export default function PetitionRequest() {
     };
   }
 
-
-
-
-
   return (
 
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -28,7 +24,7 @@ export default function PetitionRequest() {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form  className="space-y-6">
+        <form className="space-y-6">
           <div>
             <label htmlFor="text" className="block text-sm font-medium leading-6 text-gray-900">
               Segmento
