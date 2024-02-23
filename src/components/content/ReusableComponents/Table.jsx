@@ -109,7 +109,7 @@ const TablePetition = () => {
       editable: true,
     },
     {
-      title: 'Download',
+      title: 'Adquirir petição',
       dataIndex: 'operation',
       render: (_, record) =>
         dataSource.length >= 1 ? (
