@@ -1,6 +1,5 @@
-import CallToAction from '../CallToAction/CallToAction'
-import Container from '../ReusableComponents/Container'
 import TablePetition from '../ReusableComponents/Table'
+
 
 
 export default function Petition() {

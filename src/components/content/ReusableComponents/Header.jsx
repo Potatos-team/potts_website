@@ -3,6 +3,7 @@ import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import Petition from '../Petition/Petition';
 import CallToAction from '../CallToAction/CallToAction';
 import PetitionRequest from '../PetitionRequest/PetitionRequest';
+import ResultGeneratedPetition from '../GeneratedPetition/ResultGeneratedPetition';
 
 const { Header, Content } = Layout;
 
@@ -16,6 +17,7 @@ const TopHeader = () => {
     const [selectedMenu, setSelectedMenu] = useState('Gerar Petição');
 
     const handleClick = ({ key }) => {
+        console.log(key)
         setSelectedMenu(key);
     };
 
@@ -26,7 +28,7 @@ const TopHeader = () => {
             case 'Gerar Petição':
                 return <PetitionRequest />;
             case 'Resultado da Petição':
-                return <div>Conteúdo para Resultado da Petição</div>;
+                return <div><ResultGeneratedPetition /></div>;
             default:
                 return null;
         }
