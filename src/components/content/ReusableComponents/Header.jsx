@@ -17,7 +17,6 @@ const TopHeader = () => {
     const [selectedMenu, setSelectedMenu] = useState('Gerar Petição');
 
     const handleClick = ({ key }) => {
-        console.log(key)
         setSelectedMenu(key);
     };
 
