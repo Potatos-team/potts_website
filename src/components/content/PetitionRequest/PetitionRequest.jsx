@@ -1,17 +1,57 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Container from "../ReusableComponents/Container";
+import ModalResultPetition from "./ModalResultPetition";
+import { LoadingOutlined } from "@ant-design/icons";
 
 export default function PetitionRequest() {
 
+  const [formData, setFormData] = useState({
+    segmento: "",
+    assunto: "",
+    pedido: "",
+    fato: "",
+  });
+  const [response, setResponse] = useState(null);
+  const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [valuetextArea, setvaluetextArea] = useState();
 
-  const InputExample = () => {
-    const [texto, setTexto] = useState('');
+  const handleSendClick = () => {
+    setIsModalOpen(true);
+  };
 
-    const handleChange = (e) => {
-      setTexto(e.target.value);
-      console.log(texto)
-    };
-  }
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://ec2-54-162-151-251.compute-1.amazonaws.com:4000/petitions/generate",
+        formData
+      );
+      setResponse(response);
+    }
+    catch (error) {
+      setError(
+        error.response || "Ocorreu um erro ao enviar a solicitação"
+      );
+    }
+  };
+
+  useEffect(() => {
+    setvaluetextArea(response?.data);
+  }, [response?.data]);
 
   return (
     <Container>
@@ -25,72 +65,88 @@ export default function PetitionRequest() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="text" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="segmento"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 Segmento
               </label>
               <div className="mt-2">
                 <input
-                  id="text"
-                  name="text"
+                  id="segmento"
+                  name="segmento"
                   type="text"
                   autoComplete="text"
                   required
                   className="w-full px-4 py-2 border ring-1 ring-inset ring-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
                   placeholder="Turismo, Hospedagem, Logistica, Transporte aéreo..."
+                  value={formData.segmento}
+                  onChange={handleChange}
                 />
               </div>
             </div>
 
             <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="text" className="block text-sm font-medium leading-6 text-gray-900">
-                  Assunto
-                </label>
-              </div>
+              <label
+                htmlFor="assunto"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Assunto
+              </label>
               <div className="mt-2">
                 <input
-                  id="text"
-                  name="text"
+                  id="assunto"
+                  name="assunto"
                   type="text"
                   autoComplete="text"
                   required
                   className="w-full px-4 py-2 border ring-1 ring-inset ring-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
                   placeholder="Contrato, oferta, propaganda enganosa..."
+                  value={formData.assunto}
+                  onChange={handleChange}
                 />
               </div>
             </div>
 
             <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="text" className="block text-sm font-medium leading-6 text-gray-900">
-                  Pedido
-                </label>
-              </div>
+              <label
+                htmlFor="pedido"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Pedido
+              </label>
               <div className="mt-2">
                 <input
-                  id="text"
-                  name="text"
+                  id="pedido"
+                  name="pedido"
                   type="text"
                   autoComplete="text"
                   required
                   className="w-full px-4 py-2 border ring-1 ring-inset ring-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
                   placeholder="Restituir o valor pago, idenização por dano moral..."
+                  value={formData.pedido}
+                  onChange={handleChange}
                 />
               </div>
             </div>
 
             <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                  Fato
-                </label>
-              </div>
+              <label
+                htmlFor="fato"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Fato
+              </label>
               <div className="mt-2">
                 <textarea
+                  id="fato"
+                  name="fato"
                   className="w-full h-40 px-4 py-2 border ring-1 ring-inset ring-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
                   placeholder="Digite seu texto aqui..."
+                  value={formData.fato}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -98,21 +154,27 @@ export default function PetitionRequest() {
             <div>
               <button
                 type="submit"
+                onClick={handleSendClick}
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign in
+
+                {isModalOpen ? <LoadingOutlined /> : 'Enviar'}
               </button>
+              {<ModalResultPetition isModalOpen={isModalOpen} onClick={handleCloseModal} textArea={valuetextArea} />}
             </div>
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
-            Não é um membro?{' '}
-            <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            Não é um membro?{" "}
+            <a
+              href="#"
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            >
               Associe-se agora
             </a>
           </p>
         </div>
       </div>
     </Container>
-  )
+  );
 }

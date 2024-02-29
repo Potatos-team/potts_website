@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Button, Card, Switch } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Card, Skeleton, Switch } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 
 
@@ -7,19 +7,24 @@ const { Meta } = Card;
 
 
 
-const ResultGeneratedPetition = () => {
+const ResultGeneratedPetition = (props) => {
 
     const [loading, setLoading] = useState(true);
-    const [text, setText] = useState('Texto padrão');
+    const [textPetition, setTextPetition] = useState();
+    const petition = props?.text?.petition
 
 
     const onChange = (checked) => {
         setLoading(!checked);
     };
 
+    useEffect(() => {
+        setTextPetition(petition);
+    }, [petition]);
+
     const handleTextChange = (event) => {
-        setText(event.target.value);
-      };
+        setTextPetition(event.target.value);
+    };
 
     return (
         <>
@@ -43,15 +48,24 @@ const ResultGeneratedPetition = () => {
                 />
             </div>
             <div>
-                <TextArea
-                    disabled={!loading}
-                    style={{
-                        marginTop: 16,
-                        height: 400
-                    }}
-                    onChange={handleTextChange}
-                    value={text}
-                    rows={4} />
+                {
+                    !petition
+                        ?
+                        <div class="mt-4 mb-4">
+                            <Skeleton />
+                        </div>
+                        :
+                        <TextArea
+                            disabled={!loading}
+                            style={{
+                                marginTop: 16,
+                                height: 400
+                            }}
+                            onChange={handleTextChange}
+                            value={textPetition}
+                            rows={4} />
+                }
+
             </div>
             <div style={{
                 marginTop: 16,
