@@ -7,7 +7,7 @@ import ResultGeneratedPetition from '../GeneratedPetition/ResultGeneratedPetitio
 
 const { Header, Content } = Layout;
 
-const MenuPetitions = ['Gerar Petição', 'Petição', 'Resultado da Petição'];
+const MenuPetitions = ['Gerar Petição', 'Petição'];
 
 const TopHeader = () => {
     const {
@@ -26,8 +26,6 @@ const TopHeader = () => {
                 return <Petition />;
             case 'Gerar Petição':
                 return <PetitionRequest />;
-            case 'Resultado da Petição':
-                return <div><ResultGeneratedPetition /></div>;
             default:
                 return null;
         }

@@ -41,6 +41,7 @@ export default function PetitionRequest() {
         formData
       );
       setResponse(response);
+      console.log('>>>>>>>>>', response)
     }
     catch (error) {
       setError(
