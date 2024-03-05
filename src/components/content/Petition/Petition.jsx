@@ -1,8 +1,9 @@
 import TablePetition from '../ReusableComponents/Table'
-
+import { useParams } from "react-router-dom";
 
 
 export default function Petition() {
+    const params = useParams();
     return (
         <div >
                 <div class="px-10">
@@ -14,7 +15,7 @@ export default function Petition() {
                         </div>
                     </div>
 
-                    <TablePetition />
+                    <TablePetition customer_id={params?.customer_id}/>
                 </div>
         </div>
     )

@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
 import axios from 'axios';
 
-const TablePetition = () => {
+const TablePetition = (props) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
+
       try {
-        const response = await axios.get('http://ec2-54-162-151-251.compute-1.amazonaws.com:4000/petitions/1');
+        const response = await axios.get('http://ec2-54-162-151-251.compute-1.amazonaws.com:4000/petitions/'+props.customer_id);
         setData(response?.data || []);
       } catch (error) {
         console.error('Error fetching data:', error);

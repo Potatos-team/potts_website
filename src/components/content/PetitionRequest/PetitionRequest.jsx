@@ -3,6 +3,8 @@ import axios from "axios";
 import Container from "../ReusableComponents/Container";
 import ModalResultPetition from "./ModalResultPetition";
 import { LoadingOutlined } from "@ant-design/icons";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function PetitionRequest() {
 
@@ -12,11 +14,14 @@ export default function PetitionRequest() {
     pedido: "",
     fato: "",
   });
+
+  const navigate = useNavigate();
   const [response, setResponse] = useState(null);
-  const [error, setError] = useState(null);
+  const [userDataResponse, setCustomerResponse] = useState(null)
+  const [ setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [valuetextArea, setvaluetextArea] = useState();
-
+  const params = useParams()
   const handleSendClick = () => {
     setIsModalOpen(true);
   };
@@ -50,7 +55,25 @@ export default function PetitionRequest() {
     }
   };
 
-  useEffect(() => {
+  const getCustomerData = async() => {
+    try {
+      const response = await axios.get(
+        "http://ec2-54-162-151-251.compute-1.amazonaws.com:4000/"+ params.customer_id
+      );
+      setCustomerResponse(response);
+      console.log('>>>>>>>>>', response?.data[0]?.OrderID)
+      if(response.data.length == 0) {
+        navigate("/forbidden");
+      }
+    }
+    catch (error) {
+      setError(
+        error.response || "Ocorreu um erro ao enviar a solicitação"
+      );
+    }
+  }
+  useEffect( () => {
+     getCustomerData()
     setvaluetextArea(response?.data);
   }, [response?.data]);
 
@@ -161,7 +184,7 @@ export default function PetitionRequest() {
 
                 {isModalOpen ? <LoadingOutlined /> : 'Enviar'}
               </button>
-              {<ModalResultPetition isModalOpen={isModalOpen} onClick={handleCloseModal} textArea={valuetextArea} />}
+              {<ModalResultPetition isModalOpen={isModalOpen} onClick={handleCloseModal} textArea={valuetextArea} orderID={userDataResponse?.data[0]?.OrderID} customerID={params.customer_id}/>}
             </div>
           </form>
 

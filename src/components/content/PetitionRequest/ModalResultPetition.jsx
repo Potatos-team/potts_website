@@ -9,8 +9,8 @@ const ModalResultPetition = (props) => {
 
     return (
         <>
-            <Modal open={props.isModalOpen} onCancel={props.onClick} footer={null}>
-                <ResultGeneratedPetition text={props.textArea} />
+            <Modal orderID={props.orderID} customerID={props.customerID} open={props.isModalOpen} onCancel={props.onClick} footer={null}>
+                <ResultGeneratedPetition text={props.textArea} orderID={props.orderID} customerID={props.customerID}  />
             </Modal>
         </>
     );

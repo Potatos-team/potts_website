@@ -1,29 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Skeleton, Switch } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
+import { useNavigate } from "react-router-dom";
 
 const ResultGeneratedPetition = (props) => {
     const [loading, setLoading] = useState(true);
     const [textPetition, setTextPetition] = useState('');
     const petition = props?.text?.petition;
-
+    const orderID = props?.orderID
+    const customer_id = props?.customerID
+    const navigate = useNavigate();
     const onChange = (checked) => {
         setLoading(!checked);
     };
 
     const handleButtonClick = async () => {
         try {
-            const response = await fetch('http://ec2-54-162-151-251.compute-1.amazonaws.com:4000/petitions/generate', {
+            const response = await fetch('http://ec2-54-162-151-251.compute-1.amazonaws.com:4000/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ textPetition }),
-            });
 
-            if (response.ok) {
+                body: JSON.stringify({ order_id: orderID, user_id: parseInt(customer_id), petition: textPetition }),
+            });
+            console.log(response)
+            if (response.status === 201) {
                 // Adicionar componente de sucess
-                console.log('Petição enviada com sucesso!');
+                console.log('Petição criada com sucesso!');
+                navigate("/petition/"+customer_id);
             } else {
                 // Adicionar componente de error
                 console.error('Falha ao enviar a petição');
