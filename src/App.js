@@ -17,7 +17,7 @@ function App() {
             />
             <Route path="/petition/:customer_id" element={<Petition />} />
             <Route path="/generatedPetition" element={<GeneratedPetition />} />
-            <Route path="/forbidden" element={<ForbiddenPage />} />
+            <Route path="/forbidden/:customer_id" element={<ForbiddenPage />} />
           </Routes>
         </div>
       </Router>
