@@ -3,7 +3,6 @@ import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import Petition from '../Petition/Petition';
 import CallToAction from '../CallToAction/CallToAction';
 import PetitionRequest from '../PetitionRequest/PetitionRequest';
-import ResultGeneratedPetition from '../GeneratedPetition/ResultGeneratedPetition';
 
 const { Header, Content } = Layout;
 
