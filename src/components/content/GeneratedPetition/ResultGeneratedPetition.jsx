@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Skeleton, Switch } from 'antd';
+import { Button, Skeleton, Spin, Switch } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useNavigate } from "react-router-dom";
 
@@ -28,7 +28,7 @@ const ResultGeneratedPetition = (props) => {
             if (response.status === 201) {
                 // Adicionar componente de sucess
                 console.log('Petição criada com sucesso!');
-                navigate("/petition/"+customer_id);
+                navigate("/petition/" + customer_id);
             } else {
                 // Adicionar componente de error
                 console.error('Falha ao enviar a petição');
@@ -61,10 +61,12 @@ const ResultGeneratedPetition = (props) => {
                     style={{ backgroundColor: loading ? '#ccc' : ' #1677ff' }}
                 />
             </div>
-            <div>
+            <div style={{ marginTop: 20 }}>
                 {!petition ? (
-                    <div class="mt-4 mb-4">
-                        <Skeleton />
+                    <div style={{ marginTop: 16, height: 400 }}>
+                        <Spin style={{ marginTop: 120 }} tip="Loading" size="large">
+                            <div className="content" />
+                        </Spin>
                     </div>
                 ) : (
                     <TextArea
@@ -77,7 +79,7 @@ const ResultGeneratedPetition = (props) => {
                 )}
             </div>
             <div style={{ marginTop: 16, display: 'flex', justifyContent: 'end' }}>
-                <Button style={{ backgroundColor: '#1677ff', color: '#fff' }} onClick={handleButtonClick}>
+                <Button style={{ backgroundColor: '#1677ff', color: '#fff' }} onClick={handleButtonClick} disabled={!petition}>
                     Salvar
                 </Button>
             </div>
