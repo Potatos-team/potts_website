@@ -111,7 +111,7 @@ export default function PetitionRequest() {
   };
 
   useEffect(() => {
-    //getCustomerData().catch(console.error);
+    getCustomerData().catch(console.error);
     setvaluetextArea(response?.data);
   }, [response?.data]);
 
